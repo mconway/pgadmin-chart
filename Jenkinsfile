@@ -22,7 +22,7 @@ pipeline {
       steps {
         dir('chart') {
           // checkout scm
-          sh 'find'
+          sh 'find ../'
         }
       }
     }
@@ -35,7 +35,7 @@ pipeline {
       }
       steps {
         dir('chart') {
-          sh 'help lint .'
+          sh 'helm lint .'
           sh 'helm package .'
           sh 'mv *.tgz ../helm-charts/pgadmin/'
         }
