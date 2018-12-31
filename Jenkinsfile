@@ -27,9 +27,13 @@ pipeline {
       }
       steps {
         dir('pgadmin') {
+          sh 'helm init -c'
           sh 'helm lint .'
           sh 'helm package .'
           sh 'mv *.tgz ../helm-charts/pgadmin/'
+        }
+        dir('helm-charts') {
+          sh 'helm repo index ./'
         }
       }
     }
