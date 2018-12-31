@@ -4,6 +4,7 @@ pipeline {
   options {
     timeout(time: 10, unit: 'MINUTES')
     ansiColor('xterm')
+    options { checkoutToSubdirectory('chart') }
   }
 
   stages {
@@ -21,8 +22,7 @@ pipeline {
     stage('Checkout chart') {
       steps {
         dir('chart') {
-          // checkout scm
-          sh 'find ../'
+          sh 'find .'
         }
       }
     }
