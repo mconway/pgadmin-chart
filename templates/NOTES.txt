@@ -19,3 +19,9 @@
   echo "Visit http://127.0.0.1:8080 to use your application"
   kubectl port-forward $POD_NAME 8080:80
 {{- end }}
+
+Initial credentials:
+
+  Email: {{ .Values.pgadmin.setup_email }}
+  Password : $(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "pgadmin.fullname" . }} -o jsonpath="{.data.setup_password}" | base64 --decode)
+

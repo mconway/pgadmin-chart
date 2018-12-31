@@ -25,13 +25,15 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: GID
-              value: {{ .Values.pgadmin.gid }}
+              value: {{ .Values.pgadmin.gid | quote }}
             - name: UID
-              value: {{ .Values.pgadmin.uid }}
+              value: {{ .Values.pgadmin.uid | quote }}
             - name: SERVER_MODE
-              value: {{ .Values.pgadmin.server_mode }}
+              value: {{ .Values.pgadmin.server_mode | quote }}
             - name: PGADMIN_SETUP_EMAIL
               value: {{ .Values.pgadmin.setup_email }}
+            - name: PGADMIN_PORT
+              value: {{ .Values.service.port | quote }}
             - name: PGADMIN_SETUP_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -49,19 +51,19 @@ spec:
             httpGet:
               path: /misc/ping
               port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
           - name: pgadmin-data
             mountPath: /data
-        volumes:
-        - name: pgadmin-data
-        {{- if .Values.persistence.enabled }}
-          persistentVolumeClaim:
-            claimName: {{ template "pgadmin.fullname" . }}
-        {{- else }}
-          emptyDir: {}
-        {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      - name: pgadmin-data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ template "pgadmin.fullname" . }}
+      {{- else }}
+        emptyDir: {}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
