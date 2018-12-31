@@ -23,17 +23,31 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: GID
+              value: {{ .Values.pgadmin.gid }}
+            - name: UID
+              value: {{ .Values.pgadmin.uid }}
+            - name: SERVER_MODE
+              value: {{ .Values.pgadmin.server_mode }}
+            - name: PGADMIN_SETUP_EMAIL
+              value: {{ .Values.pgadmin.setup_email }}
+            - name: PGADMIN_SETUP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "pgadmin.fullname" . }}
+                  key: setup_password
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 5050
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /misc/ping
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /misc/ping
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: nginx
-  tag: stable
+  repository: chorss/docker-pgadmin4
+  tag: 3.6
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -14,7 +14,14 @@ fullnameOverride: ""
 
 service:
   type: ClusterIP
-  port: 80
+  port: 5050
+
+pgadmin:
+  uid: 1000
+  gid: 1000
+  server_mode: true
+  setup_email: admin@mailinator.com
+  setup_password: password
 
 ingress:
   enabled: false
@@ -46,3 +53,16 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+persistence:
+  enabled: false
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce
+	size: 1Gi
