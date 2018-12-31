@@ -30,9 +30,12 @@ pipeline {
           sh 'helm init -c'
           sh 'helm lint .'
           sh 'helm package .'
-          sh 'mv *.tgz ../helm-charts/pgadmin/'
+          stash(name:'helm-packages', allowEmpty: false, includes: '*.tgz')
         }
         dir('helm-charts') {
+          dir('pgadmin') {
+            unstash(name:'helm-packages')
+          }
           sh 'helm repo index ./'
         }
       }
