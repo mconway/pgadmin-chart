@@ -49,7 +49,7 @@ pipeline {
         dir('helm-charts') {
           sh 'git config --global user.email "jenkins@gavinmogan.com"'
           sh 'git config --global user.name "Jenkins"'
-          sh 'git add .'
+          sh 'git add index.yaml pgadmin'
           sh 'git commit -m "Adding package"'
         }
       }
@@ -67,7 +67,8 @@ pipeline {
         sh 'git config --global user.email "jenkins@gavinmogan.com"'
         sh 'git config --global user.name "Jenkins"'
         sh 'git config --global push.default simple'
-        sh 'git push https://${GITHUB_USR}:${GITHUB_PSW}@github.com/halkeye/helm-charts.git'
+        sh 'git remote -v'
+        sh 'git push origin master'
       }
     }
   }
