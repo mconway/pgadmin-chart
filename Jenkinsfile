@@ -60,11 +60,13 @@ pipeline {
         branch 'master'
       }
       steps {
-        sh 'git config --global user.email "jenkins@gavinmogan.com"'
-        sh 'git config --global user.name "Jenkins"'
-        sh 'git config --global push.default simple'
-        sh 'git remote -v'
-        sh 'git push origin master'
+        dir('helm-charts') {
+          sh 'git config --global user.email "jenkins@gavinmogan.com"'
+          sh 'git config --global user.name "Jenkins"'
+          sh 'git config --global push.default simple'
+          sh 'git remote -v'
+          sh 'git push origin master'
+        }
       }
     }
   }
