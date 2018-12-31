@@ -4,7 +4,7 @@ pipeline {
   options {
     timeout(time: 10, unit: 'MINUTES')
     ansiColor('xterm')
-    options { checkoutToSubdirectory('chart') }
+    checkoutToSubdirectory('chart')
   }
 
   stages {
