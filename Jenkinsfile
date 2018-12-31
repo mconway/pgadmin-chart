@@ -4,7 +4,7 @@ pipeline {
   options {
     timeout(time: 10, unit: 'MINUTES')
     ansiColor('xterm')
-    checkoutToSubdirectory('chart')
+    checkoutToSubdirectory('pgadmin')
   }
 
   stages {
@@ -19,14 +19,6 @@ pipeline {
       }
     }
 
-    stage('Checkout chart') {
-      steps {
-        dir('chart') {
-          sh 'find .'
-        }
-      }
-    }
-
     stage('Build') {
       agent {
         docker {
@@ -34,7 +26,7 @@ pipeline {
         }
       }
       steps {
-        dir('chart') {
+        dir('pgadmin') {
           sh 'helm lint .'
           sh 'helm package .'
           sh 'mv *.tgz ../helm-charts/pgadmin/'
