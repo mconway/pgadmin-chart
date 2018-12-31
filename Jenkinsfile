@@ -27,7 +27,6 @@ pipeline {
               sh 'helm init -c'
               sh 'helm lint .'
               sh 'helm package .'
-              sh 'find'
             }
           }
           stash(name:'helm-packages', allowEmpty: false, includes: '*.tgz')
@@ -35,9 +34,7 @@ pipeline {
         dir('helm-charts') {
           dir('pgadmin') {
             unstash(name:'helm-packages')
-            sh 'find'
           }
-          sh 'find'
           script {
             docker.image('dtzar/helm-kubectl').inside {
               sh 'helm repo index ./'
@@ -50,7 +47,6 @@ pipeline {
     stage('Commit') {
       steps {
         dir('helm-charts') {
-          sh 'find'
           sh 'git config --global user.email "jenkins@gavinmogan.com"'
           sh 'git config --global user.name "Jenkins"'
           sh 'git add .'
