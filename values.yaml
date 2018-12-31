@@ -28,7 +28,8 @@ ingress:
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  paths: []
+  paths: 
+    - /
   hosts:
     - chart-example.local
   tls: []
@@ -65,4 +66,4 @@ persistence:
   storageClassName: ""
   accessModes:
     - ReadWriteOnce
-	size: 1Gi
+  size: 1Gi
