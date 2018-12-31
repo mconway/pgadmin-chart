@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Checkout halkeye/helm-charts') {
       environment {
-        GITHUB = credentials('credentialsId')
+        GITHUB = credentials('github-halkeye')
       }
       steps {
         dir('helm-charts') {
@@ -58,7 +58,7 @@ pipeline {
         branch 'master'
       }
       environment {
-        GITHUB = credentials('credentialsId')
+        GITHUB = credentials('github-halkeye')
       }
       steps {
         sh 'echo ${GITHUB_USR} pushing '
