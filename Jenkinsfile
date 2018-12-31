@@ -22,11 +22,13 @@ pipeline {
     stage('Build') {
       steps {
         dir('pgadmin') {
-          docker.image('dtzar/helm-kubectl').inside {
-            sh 'helm init -c'
-            sh 'helm lint .'
-            sh 'helm package .'
-            sh 'find'
+          script {
+            docker.image('dtzar/helm-kubectl').inside {
+              sh 'helm init -c'
+              sh 'helm lint .'
+              sh 'helm package .'
+              sh 'find'
+            }
           }
           stash(name:'helm-packages', allowEmpty: false, includes: '*.tgz')
         }
@@ -36,8 +38,10 @@ pipeline {
             sh 'find'
           }
           sh 'find'
-          docker.image('dtzar/helm-kubectl').inside {
-            sh 'helm repo index ./'
+          script {
+            docker.image('dtzar/helm-kubectl').inside {
+              sh 'helm repo index ./'
+            }
           }
         }
       }
