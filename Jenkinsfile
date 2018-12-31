@@ -21,7 +21,8 @@ pipeline {
     stage('Checkout chart') {
       steps {
         dir('chart') {
-          checkout scm
+          // checkout scm
+          sh 'find'
         }
       }
     }
