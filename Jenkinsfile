@@ -47,7 +47,7 @@ pipeline {
           sh 'git config --global user.email "jenkins@gavinmogan.com"'
           sh 'git config --global user.name "Jenkins"'
           sh 'git add .'
-          sh 'git commit -m "Adding package"
+          sh 'git commit -m "Adding package"'
         }
       }
     }
@@ -69,4 +69,3 @@ pipeline {
     }
   }
 }
-
