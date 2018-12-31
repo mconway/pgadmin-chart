@@ -59,11 +59,7 @@ pipeline {
       when {
         branch 'master'
       }
-      environment {
-        GITHUB = credentials('github-halkeye')
-      }
       steps {
-        sh 'echo ${GITHUB_USR} pushing '
         sh 'git config --global user.email "jenkins@gavinmogan.com"'
         sh 'git config --global user.name "Jenkins"'
         sh 'git config --global push.default simple'
