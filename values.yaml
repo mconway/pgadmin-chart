@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: chorss/docker-pgadmin4
-  tag: 3.6
+  tag: "{{ .Chart.AppVersion }}"
   pullPolicy: IfNotPresent
 
 nameOverride: ""
