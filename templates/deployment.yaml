@@ -57,7 +57,7 @@ spec:
               port: http
           volumeMounts:
           - name: pgadmin-data
-            mountPath: /var/lib/pgadmin4
+            mountPath: /data
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
