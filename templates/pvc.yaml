@@ -1,14 +1,15 @@
 {{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
+{{- $persistenceAnnotations := .Values.persistence.annotations }}
+{{- if .Values.persistence.skipuninstall }}
+{{- $persistenceAnnotations = merge $persistenceAnnotations (dict "helm.sh/resource-policy" "keep") }}
+{{- end }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ template "pgadmin.fullname" . }}
   labels:
-    app: {{ template "pgadmin.name" . }}
-    chart: {{ template "pgadmin.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-  {{- with .Values.persistence.annotations  }}
+{{ include "pgadmin.labels" . | indent 4 }}
+  {{- with $persistenceAnnotations }}
   annotations:
 {{ toYaml . | indent 4 }}
   {{- end }}
