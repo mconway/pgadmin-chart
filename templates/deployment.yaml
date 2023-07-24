@@ -58,11 +58,11 @@ spec:
               value: {{ .Values.pgadmin.uid | quote }}
             - name: SERVER_MODE
               value: {{ .Values.pgadmin.server_mode | quote }}
-            - name: PGADMIN_SETUP_EMAIL
+            - name: PGADMIN_DEFAULT_EMAIL
               value: {{ .Values.pgadmin.setup_email }}
             - name: PGADMIN_PORT
               value: {{ .Values.service.port | quote }}
-            - name: PGADMIN_SETUP_PASSWORD
+            - name: PGADMIN_DEFAULT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ template "pgadmin.fullname" . }}
